@@ -43,17 +43,27 @@ namespace BowRepairMod
 			ToolsItem Secondary_Tool;
 			ToolsItem[] available_tools;
 			GearItem[] needed_gear;
-			int[] gear_counts;
+            int[] gear_counts = [0];
 
-
-			//Set Up Needed Tools
-			Tool = GearItem.LoadGearItemPrefab("GEAR_SimpleTools").m_ToolsItem;
+            //Set Up Needed Tools
+            Tool = GearItem.LoadGearItemPrefab("GEAR_SimpleTools").m_ToolsItem;
 			Secondary_Tool = GearItem.LoadGearItemPrefab("GEAR_HighQualityTools").m_ToolsItem;
 			available_tools = [Tool, Secondary_Tool];
 
 			//Set Up Needed Material
 			needed_gear = [GearItem.LoadGearItemPrefab("GEAR_Softwood"), GearItem.LoadGearItemPrefab("GEAR_GutDried")];
-			gear_counts = [1, 1];
+            switch (Settings.instance.BowMaterialNeed)
+            {
+                case 0:
+                    gear_counts = [1, 1];
+                    break;
+                case 1:
+                    gear_counts = [2, 1];
+                    break;
+                case 2:
+                    gear_counts = [2, 2];
+                    break;
+            }
 
             //Regular Bow
             gear = GearItem.LoadGearItemPrefab("Gear_Bow").gameObject;
@@ -73,9 +83,20 @@ namespace BowRepairMod
 			else if (Settings.instance.BowRepairMode == 1)
 			{
 				needed_gear = [GearItem.LoadGearItemPrefab("GEAR_Softwood"), GearItem.LoadGearItemPrefab("GEAR_ScrapMetal")];
-				gear_counts = [1, 1];
+                switch (Settings.instance.BowMaterialNeed)
+                {
+                    case 0:
+                        gear_counts = [1, 1];
+                        break;
+                    case 1:
+                        gear_counts = [1, 2];
+                        break;
+                    case 2:
+                        gear_counts = [2, 2];
+                        break;
+                }
 
-				GameManager.DestroyImmediate(gear.GetComponent<Repairable>());
+                GameManager.DestroyImmediate(gear.GetComponent<Repairable>());
 
 				gear.AddComponent<Millable>();
 				gear.GetComponent<Millable>().m_CanRestoreFromWornOut = true;
@@ -83,7 +104,19 @@ namespace BowRepairMod
 				gear.GetComponent<Millable>().m_RepairDurationMinutes = 30;
 				gear.GetComponent<Millable>().m_RepairRequiredGear = needed_gear;
 				gear.GetComponent<Millable>().m_RepairRequiredGearUnits = gear_counts;
-				gear.GetComponent<Millable>().m_RestoreRequiredGear = needed_gear;
+                switch (Settings.instance.BowMaterialNeed)
+                {
+                    case 0:
+                        gear_counts = [1, 1];
+                        break;
+                    case 1:
+                        gear_counts = [2, 2];
+                        break;
+                    case 2:
+                        gear_counts = [3, 3];
+                        break;
+                }
+                gear.GetComponent<Millable>().m_RestoreRequiredGear = needed_gear;
 				gear.GetComponent<Millable>().m_RestoreRequiredGearUnits = gear_counts;
 				gear.GetComponent<Millable>().m_Skill = SkillType.Archery;
 
@@ -91,8 +124,19 @@ namespace BowRepairMod
 			else if (Settings.instance.BowRepairMode == 2)
 			{
 				needed_gear = [GearItem.LoadGearItemPrefab("GEAR_Softwood"), GearItem.LoadGearItemPrefab("GEAR_GutDried")];
-				gear_counts = [1, 1];
-				gear.AddComponent<Repairable>();
+                switch (Settings.instance.BowMaterialNeed)
+                {
+                    case 0:
+                        gear_counts = [1, 1];
+                        break;
+                    case 1:
+                        gear_counts = [2, 1];
+                        break;
+                    case 2:
+                        gear_counts = [2, 2];
+                        break;
+                }
+                gear.AddComponent<Repairable>();
 				gear.GetComponent<Repairable>().m_RepairToolChoices = available_tools;
 				gear.GetComponent<Repairable>().m_DurationMinutes = 60;
 				gear.GetComponent<Repairable>().m_ConditionIncrease = 40;
@@ -102,7 +146,18 @@ namespace BowRepairMod
 				gear.GetComponent<Repairable>().m_RepairAudio = "Play_CraftingArrows";
 
 				needed_gear = [GearItem.LoadGearItemPrefab("GEAR_Softwood"), GearItem.LoadGearItemPrefab("GEAR_ScrapMetal")];
-				gear_counts = [1, 1];
+                switch (Settings.instance.BowMaterialNeed)
+                {
+                    case 0:
+                        gear_counts = [1, 1];
+                        break;
+                    case 1:
+                        gear_counts = [1, 2];
+                        break;
+                    case 2:
+                        gear_counts = [2, 2];
+                        break;
+                }
 
                 gear.AddComponent<Millable>();
                 gear.GetComponent<Millable>().m_CanRestoreFromWornOut = true;
@@ -110,8 +165,19 @@ namespace BowRepairMod
                 gear.GetComponent<Millable>().m_RepairDurationMinutes = 30;
                 gear.GetComponent<Millable>().m_RepairRequiredGear = needed_gear;
 				gear.GetComponent<Millable>().m_RepairRequiredGearUnits = gear_counts;
-				gear_counts = [1, 2];
-				gear.GetComponent<Millable>().m_RestoreRequiredGear = needed_gear;
+                switch (Settings.instance.BowMaterialNeed)
+                {
+                    case 0:
+                        gear_counts = [1, 1];
+                        break;
+                    case 1:
+                        gear_counts = [2, 2];
+                        break;
+                    case 2:
+                        gear_counts = [3, 3];
+                        break;
+                }
+                gear.GetComponent<Millable>().m_RestoreRequiredGear = needed_gear;
                 gear.GetComponent<Millable>().m_RestoreRequiredGearUnits = gear_counts;
                 gear.GetComponent<Millable>().m_Skill = SkillType.Archery;
 
@@ -133,8 +199,20 @@ namespace BowRepairMod
 				if (Settings.instance.SportBowRepairMode == 0)
 				{
 					needed_gear = [GearItem.LoadGearItemPrefab("GEAR_ScrapLead"), GearItem.LoadGearItemPrefab("Gear_ScrapMetal")];
-					gear_counts = [2, 1];
-					gear.AddComponent<Repairable>();
+                    switch (Settings.instance.SportBowMaterialNeed)
+                    {
+                        case 0:
+                            gear_counts = [1, 1];
+                            break;
+                        case 1:
+                            gear_counts = [2, 1];
+                            break;
+                        case 2:
+                            gear_counts = [3, 3];
+                            break;
+                    }
+
+                    gear.AddComponent<Repairable>();
 					gear.GetComponent<Repairable>().m_RepairToolChoices = available_tools;
 					gear.GetComponent<Repairable>().m_DurationMinutes = 65;
 					gear.GetComponent<Repairable>().m_ConditionIncrease = 35;
@@ -147,16 +225,38 @@ namespace BowRepairMod
 				else if (Settings.instance.SportBowRepairMode == 1)
 				{
 					needed_gear = [GearItem.LoadGearItemPrefab("GEAR_ScrapLead"), GearItem.LoadGearItemPrefab("Gear_ScrapMetal")];
-					gear_counts = [2, 1];
+                    switch (Settings.instance.SportBowMaterialNeed)
+                    {
+                        case 0:
+                            gear_counts = [1, 1];
+                            break;
+                        case 1:
+                            gear_counts = [2, 1];
+                            break;
+                        case 2:
+                            gear_counts = [3, 3];
+                            break;
+                    }
 
-					gear.AddComponent<Millable>();
+                    gear.AddComponent<Millable>();
 					gear.GetComponent<Millable>().m_CanRestoreFromWornOut = true;
 					gear.GetComponent<Millable>().m_RecoveryDurationMinutes = 145;
 					gear.GetComponent<Millable>().m_RepairDurationMinutes = 50;
 					gear.GetComponent<Millable>().m_RepairRequiredGear = needed_gear;
 					gear.GetComponent<Millable>().m_RepairRequiredGearUnits = gear_counts;
-					gear_counts = [3, 3];
-					gear.GetComponent<Millable>().m_RestoreRequiredGear = needed_gear;
+                    switch (Settings.instance.SportBowMaterialNeed)
+                    {
+                        case 0:
+                            gear_counts = [1, 1];
+                            break;
+                        case 1:
+                            gear_counts = [2, 2];
+                            break;
+                        case 2:
+                            gear_counts = [3, 4];
+                            break;
+                    }
+                    gear.GetComponent<Millable>().m_RestoreRequiredGear = needed_gear;
 					gear.GetComponent<Millable>().m_RestoreRequiredGearUnits = gear_counts;
 					gear.GetComponent<Millable>().m_Skill = SkillType.Archery;
 					GameManager.DestroyImmediate(gear.GetComponent<Repairable>());
@@ -166,7 +266,19 @@ namespace BowRepairMod
 				{
 
 					needed_gear = [GearItem.LoadGearItemPrefab("GEAR_ScrapLead"), GearItem.LoadGearItemPrefab("Gear_ScrapMetal")];
-					gear_counts = [2, 1];
+					switch(Settings.instance.SportBowMaterialNeed)
+					{
+						case 0:
+                            gear_counts = [1, 1];
+                            break;
+						case 1:
+							gear_counts = [2, 1];
+							break;
+						case 2:
+							gear_counts = [3, 3];
+							break;
+					}
+					
 					gear.AddComponent<Repairable>();
 					gear.GetComponent<Repairable>().m_RepairToolChoices = available_tools;
 					gear.GetComponent<Repairable>().m_DurationMinutes = 65;
@@ -183,8 +295,19 @@ namespace BowRepairMod
 					gear.GetComponent<Millable>().m_RepairDurationMinutes = 50;
 					gear.GetComponent<Millable>().m_RepairRequiredGear = needed_gear;
 					gear.GetComponent<Millable>().m_RepairRequiredGearUnits = gear_counts;
-					gear_counts = [3, 3];
-					gear.GetComponent<Millable>().m_RestoreRequiredGear = needed_gear;
+                    switch (Settings.instance.SportBowMaterialNeed)
+                    {
+                        case 0:
+                            gear_counts = [1, 1];
+                            break;
+                        case 1:
+                            gear_counts = [2, 2];
+                            break;
+                        case 2:
+                            gear_counts = [3, 4];
+                            break;
+                    }
+                    gear.GetComponent<Millable>().m_RestoreRequiredGear = needed_gear;
 					gear.GetComponent<Millable>().m_RestoreRequiredGearUnits = gear_counts;
 					gear.GetComponent<Millable>().m_Skill = SkillType.Archery;
 				}
@@ -197,72 +320,139 @@ namespace BowRepairMod
 				//Woodwright Bow
 
 				gear = GearItem.LoadGearItemPrefab("Gear_Bow_Woodwrights").gameObject;
-                if (Settings.instance.WoodBowRepairMode == 0)
-                {
-                    needed_gear = [GearItem.LoadGearItemPrefab("GEAR_Hardwood"), GearItem.LoadGearItemPrefab("Gear_ScrapMetal")];
-                    gear_counts = [1, 1];
+				if (Settings.instance.WoodBowRepairMode == 0)
+				{
+					needed_gear = [GearItem.LoadGearItemPrefab("GEAR_Hardwood"), GearItem.LoadGearItemPrefab("Gear_ScrapMetal")];
+                    switch (Settings.instance.WoodBowMaterialNeed)
+                    {
+                        case 0:
+                            gear_counts = [1, 1];
+                            break;
+                        case 1:
+                            gear_counts = [1, 2];
+                            break;
+                        case 2:
+                            gear_counts = [2, 2];
+                            break;
+                    }
                     gear.AddComponent<Repairable>();
-                    gear.GetComponent<Repairable>().m_RepairToolChoices = available_tools;
-                    gear.GetComponent<Repairable>().m_DurationMinutes = 60;
-                    gear.GetComponent<Repairable>().m_ConditionIncrease = 35;
-                    gear.GetComponent<Repairable>().m_RequiredGear = needed_gear;
-                    gear.GetComponent<Repairable>().m_RequiredGearUnits = gear_counts;
-                    gear.GetComponent<Repairable>().m_RequiresToolToRepair = true;
-                    gear.GetComponent<Repairable>().m_RepairAudio = "Play_CraftingWood";
-                    GameManager.DestroyImmediate(gear.GetComponent<Millable>());
-                }
-                else if (Settings.instance.WoodBowRepairMode == 1)
-                {
-                    needed_gear = [GearItem.LoadGearItemPrefab("GEAR_Hardwood"), GearItem.LoadGearItemPrefab("Gear_ScrapMetal")];
-                    gear_counts = [1, 2];
+					gear.GetComponent<Repairable>().m_RepairToolChoices = available_tools;
+					gear.GetComponent<Repairable>().m_DurationMinutes = 60;
+					gear.GetComponent<Repairable>().m_ConditionIncrease = 35;
+					gear.GetComponent<Repairable>().m_RequiredGear = needed_gear;
+					gear.GetComponent<Repairable>().m_RequiredGearUnits = gear_counts;
+					gear.GetComponent<Repairable>().m_RequiresToolToRepair = true;
+					gear.GetComponent<Repairable>().m_RepairAudio = "Play_CraftingWood";
+					GameManager.DestroyImmediate(gear.GetComponent<Millable>());
+				}
+				else if (Settings.instance.WoodBowRepairMode == 1)
+				{
+					needed_gear = [GearItem.LoadGearItemPrefab("GEAR_Hardwood"), GearItem.LoadGearItemPrefab("Gear_ScrapMetal")];
+                    switch (Settings.instance.WoodBowMaterialNeed)
+                    {
+                        case 0:
+                            gear_counts = [1, 1];
+                            break;
+                        case 1:
+                            gear_counts = [1, 2];
+                            break;
+                        case 2:
+                            gear_counts = [2, 2];
+                            break;
+                    }
 
                     gear.AddComponent<Millable>();
-                    gear.GetComponent<Millable>().m_CanRestoreFromWornOut = true;
-                    gear.GetComponent<Millable>().m_RecoveryDurationMinutes = 115;
-                    gear.GetComponent<Millable>().m_RepairDurationMinutes = 45;
-                    gear.GetComponent<Millable>().m_RepairRequiredGear = needed_gear;
-                    gear.GetComponent<Millable>().m_RepairRequiredGearUnits = gear_counts;
-                    gear_counts = [2, 2];
+					gear.GetComponent<Millable>().m_CanRestoreFromWornOut = true;
+					gear.GetComponent<Millable>().m_RecoveryDurationMinutes = 115;
+					gear.GetComponent<Millable>().m_RepairDurationMinutes = 45;
+					gear.GetComponent<Millable>().m_RepairRequiredGear = needed_gear;
+					gear.GetComponent<Millable>().m_RepairRequiredGearUnits = gear_counts;
+                    switch (Settings.instance.WoodBowMaterialNeed)
+                    {
+                        case 0:
+                            gear_counts = [1, 1];
+                            break;
+                        case 1:
+                            gear_counts = [1, 2];
+                            break;
+                        case 2:
+                            gear_counts = [2, 2];
+                            break;
+                    }
                     gear.GetComponent<Millable>().m_RestoreRequiredGear = needed_gear;
-                    gear.GetComponent<Millable>().m_RestoreRequiredGearUnits = gear_counts;
-                    gear.GetComponent<Millable>().m_Skill = SkillType.Archery;
-                    GameManager.DestroyImmediate(gear.GetComponent<Repairable>());
-                }
+					gear.GetComponent<Millable>().m_RestoreRequiredGearUnits = gear_counts;
+					gear.GetComponent<Millable>().m_Skill = SkillType.Archery;
+					GameManager.DestroyImmediate(gear.GetComponent<Repairable>());
+				}
 
-                else if (Settings.instance.WoodBowRepairMode == 2)
-                {
+				else if (Settings.instance.WoodBowRepairMode == 2)
+				{
 
-                    needed_gear = [GearItem.LoadGearItemPrefab("GEAR_Hardwood"), GearItem.LoadGearItemPrefab("Gear_ScrapMetal")];
-                    gear_counts = [1, 1];
+					needed_gear = [GearItem.LoadGearItemPrefab("GEAR_Hardwood"), GearItem.LoadGearItemPrefab("Gear_ScrapMetal")];
+                    switch (Settings.instance.WoodBowMaterialNeed)
+                    {
+                        case 0:
+                            gear_counts = [1, 1];
+                            break;
+                        case 1:
+                            gear_counts = [2, 2];
+                            break;
+                        case 2:
+                            gear_counts = [3, 3];
+                            break;
+                    }
                     gear.AddComponent<Repairable>();
-                    gear.GetComponent<Repairable>().m_RepairToolChoices = available_tools;
-                    gear.GetComponent<Repairable>().m_DurationMinutes = 60;
-                    gear.GetComponent<Repairable>().m_ConditionIncrease = 35;
-                    gear.GetComponent<Repairable>().m_RequiredGear = needed_gear;
-                    gear.GetComponent<Repairable>().m_RequiredGearUnits = gear_counts;
-                    gear.GetComponent<Repairable>().m_RequiresToolToRepair = true;
-                    gear.GetComponent<Repairable>().m_RepairAudio = "Play_CraftingWood";
+					gear.GetComponent<Repairable>().m_RepairToolChoices = available_tools;
+					gear.GetComponent<Repairable>().m_DurationMinutes = 60;
+					gear.GetComponent<Repairable>().m_ConditionIncrease = 35;
+					gear.GetComponent<Repairable>().m_RequiredGear = needed_gear;
+					gear.GetComponent<Repairable>().m_RequiredGearUnits = gear_counts;
+					gear.GetComponent<Repairable>().m_RequiresToolToRepair = true;
+					gear.GetComponent<Repairable>().m_RepairAudio = "Play_CraftingWood";
 
-                    needed_gear = [GearItem.LoadGearItemPrefab("GEAR_Hardwood"), GearItem.LoadGearItemPrefab("Gear_ScrapMetal")];
-                    gear_counts = [1, 2];
+					needed_gear = [GearItem.LoadGearItemPrefab("GEAR_Hardwood"), GearItem.LoadGearItemPrefab("Gear_ScrapMetal")];
+                    switch (Settings.instance.WoodBowMaterialNeed)
+                    {
+                        case 0:
+                            gear_counts = [1, 1];
+                            break;
+                        case 1:
+                            gear_counts = [1, 2];
+                            break;
+                        case 2:
+                            gear_counts = [2, 2];
+                            break;
+                    }
                     gear.AddComponent<Millable>();
-                    gear.GetComponent<Millable>().m_CanRestoreFromWornOut = true;
-                    gear.GetComponent<Millable>().m_RecoveryDurationMinutes = 115;
-                    gear.GetComponent<Millable>().m_RepairDurationMinutes = 45;
-                    gear.GetComponent<Millable>().m_RepairRequiredGear = needed_gear;
-                    gear.GetComponent<Millable>().m_RepairRequiredGearUnits = gear_counts;
-                    gear_counts = [2, 2];
+					gear.GetComponent<Millable>().m_CanRestoreFromWornOut = true;
+					gear.GetComponent<Millable>().m_RecoveryDurationMinutes = 115;
+					gear.GetComponent<Millable>().m_RepairDurationMinutes = 45;
+					gear.GetComponent<Millable>().m_RepairRequiredGear = needed_gear;
+					gear.GetComponent<Millable>().m_RepairRequiredGearUnits = gear_counts;
+                    switch (Settings.instance.WoodBowMaterialNeed)
+                    {
+                        case 0:
+                            gear_counts = [1, 1];
+                            break;
+                        case 1:
+                            gear_counts = [2, 2];
+                            break;
+                        case 2:
+                            gear_counts = [3, 3];
+                            break;
+                    }
                     gear.GetComponent<Millable>().m_RestoreRequiredGear = needed_gear;
-                    gear.GetComponent<Millable>().m_RestoreRequiredGearUnits = gear_counts;
-                    gear.GetComponent<Millable>().m_Skill = SkillType.Archery;
-                }
-                else
-                {
-                    GameManager.DestroyImmediate(gear.GetComponent<Repairable>());
-                    GameManager.DestroyImmediate(gear.GetComponent<Millable>());
-                }
+					gear.GetComponent<Millable>().m_RestoreRequiredGearUnits = gear_counts;
+					gear.GetComponent<Millable>().m_Skill = SkillType.Archery;
+				}
+				else
+				{
+					GameManager.DestroyImmediate(gear.GetComponent<Repairable>());
+					GameManager.DestroyImmediate(gear.GetComponent<Millable>());
+				}
 
-            }
+			}
+
 
 
 
