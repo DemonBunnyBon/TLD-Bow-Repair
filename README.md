@@ -3,12 +3,10 @@
 # Bow Repair
 A mod for The Long Dark that makes bows repairable.
 
-# Details
-
-The mod allows you to repair regular bows, as well as the special DLC bow variants (which needs to be enabled).
-There are settings as to where you can repair each type of bow (Either everywhere or at a milling machine).
+The mod allows you to repair regular bows, as well as the special DLC bow variants, everything can be enabled and disabled in the settings.
+There are settings as to where you can repair each type of bow, either at a milling machine, or just straight from the inventory (or both). 
 
 # Installation
 
-- Download and install mod settings.
+- Download and install [Mod Settings](https://github.com/DigitalzombieTLD/ModSettings/releases/), it is required.
 - Drop the .DLL in your mods folder.
