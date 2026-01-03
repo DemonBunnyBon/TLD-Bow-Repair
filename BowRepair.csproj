@@ -15,14 +15,14 @@
 
 	<PropertyGroup>
 		<!-- This should point to wherever your games primary EXE is -->
-		<TheLongDarkPath>D:\Games\steamapps\common\TheLongDark\</TheLongDarkPath>
-		<ReleaseFolderPath>D:\TLDMOD\Release\</ReleaseFolderPath>
+		<TheLongDarkPath>/home/marcy/.local/share/Steam/steamapps/common/TheLongDark</TheLongDarkPath>
+		<ReleaseFolderPath>/home/marcy/Documents/TLD Stuff/TLDMod/Release</ReleaseFolderPath>
 	</PropertyGroup>
 
 	<!-- List of used references -->
 	<ItemGroup>
 		<!-- This is the base reference. MUST EXIST -->
-		<PackageReference Include="STBlade.Modding.TLD.Il2CppAssemblies.Windows" Version="2.25.0" />
+		<PackageReference Include="STBlade.Modding.TLD.Il2CppAssemblies.Windows" Version="2.51.0" />
 		<!-- This is only if you use the ModSettings -->
 		<PackageReference Include="STBlade.Modding.TLD.ModSettings" Version="1.9.0" />
 	</ItemGroup>

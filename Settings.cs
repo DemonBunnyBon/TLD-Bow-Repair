@@ -42,6 +42,16 @@ namespace BowRepairMod
         [Choice("Low", "Medium", "High")]
         public int WoodBowMaterialNeed = 0;
 
+        [Name("Bushcraft Bow Repair Mode")]
+        [Description("Specifies where the Bushcraft Bow can be repaired [Requires scene transition or reload to update].")]
+        [Choice("Hand", "Milling Machine", "Hand And Machine", "None")]
+        public int BushBowRepairMode = 2;
+
+        [Name("Bushcraft Bow Material Requirement")]
+        [Description("Specifies how many materials are needed for repair [Requires scene transition or reload to update].")]
+        [Choice("Low","Medium","High")]
+        public int BushBowMaterialNeed = 1;
+
 
 
         [Section("Reset Settings")]
@@ -69,6 +79,8 @@ namespace BowRepairMod
                 SetFieldVisible(nameof(WoodBowRepairMode), true);
                 SetFieldVisible(nameof(WoodBowMaterialNeed), true);
                 SetFieldVisible(nameof(SportBowMaterialNeed), true);
+                SetFieldVisible(nameof(BushBowMaterialNeed), true);
+                SetFieldVisible(nameof(BushBowRepairMode), true);
             }
             else
             {
@@ -76,6 +88,8 @@ namespace BowRepairMod
                 SetFieldVisible(nameof(WoodBowRepairMode), false);
                 SetFieldVisible(nameof(WoodBowMaterialNeed), false);
                 SetFieldVisible(nameof(SportBowMaterialNeed), false);
+                SetFieldVisible(nameof(BushBowMaterialNeed), false);
+                SetFieldVisible(nameof(BushBowRepairMode), false);
             }
 
         }
@@ -89,6 +103,8 @@ namespace BowRepairMod
                 instance.SportBowMaterialNeed = 1;
                 instance.WoodBowRepairMode = 2;
                 instance.WoodBowMaterialNeed = 0;
+                instance.BushBowMaterialNeed = 1;
+                instance.BushBowRepairMode = 2;
                 instance.ResetSettings = false;
                 instance.DLCEnable = false;
                 instance.RefreshFields();

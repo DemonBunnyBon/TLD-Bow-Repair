@@ -9,9 +9,9 @@ using BowRepairMod;
 [assembly: AssemblyCopyright("Marcy")]
 
 
-[assembly: AssemblyVersion("1.1.1")]
-[assembly: AssemblyFileVersion("1.1.1")]
-[assembly: MelonInfo(typeof(BowRepair), "BowRepair", "1.1.1", "Marcy", null)]
+[assembly: AssemblyVersion("1.2.2")]
+[assembly: AssemblyFileVersion("1.2.2")]
+[assembly: MelonInfo(typeof(BowRepair), "BowRepair", "1.2.2", "Marcy", null)]
 
 
 [assembly: MelonGame("Hinterland", "TheLongDark")]
