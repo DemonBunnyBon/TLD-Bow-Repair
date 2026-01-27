@@ -1,4 +1,4 @@
-![Screenshot](https://github.com/DemonBunnyBon/ModListJson/blob/main/Thumb_BR.png?raw=true)
+![Screenshot](https://github.com/DemonBunnyBon/ModListJson/blob/main/THUMB_BR.jpg?raw=true)
 
 # Bow Repair
 A mod for The Long Dark that makes bows repairable.
